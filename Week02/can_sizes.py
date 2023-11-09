@@ -1,7 +1,7 @@
 '''Compute and print the storage efficiency for each of the following 12 steel can sizes.'''
 import math
 
-# Dictionary of can [radius, height, cost per can in $]
+# Dictionary of cans [radius, height, cost per can in $]
 cans = {
     "#1 Picnic": [6.83, 10.16, 0.28],
     "#1 Tall": [7.78, 11.91, 0.43],
