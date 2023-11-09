@@ -9,20 +9,32 @@ cans = {
     "#2.5": [10.32, 11.91, 0.61]
 }
 
-def main(can, radius, height):
+def main():
+    # Loop through Can dictionary
+    for can, specs in cans.items():
+        storage_efficiency = compute_storage_efficiency(can, specs[0], specs[1])
+        volume = compute_volume(specs[0], specs[1])
+        cost_efficiency = compute_cost_efficiency(volume, specs[2])
+        print(f"{can} {storage_efficiency:.2f} {cost_efficiency:.0f}")
+
+
+def compute_storage_efficiency(can, radius, height):
     volume = compute_volume(radius, height)
     surface_area = compute_surface_area(radius, height)
     storage_efficiency = volume / surface_area
-    print(f"{can} {storage_efficiency:.2f}")
+    return storage_efficiency
+
 
 def compute_volume(radius, height):
     volume = math.pi * radius**2 * height
     return volume
 
 def compute_surface_area(radius, height):
-    result = 2*math.pi * radius * (radius +height)
+    result = 2*math.pi * radius * (radius + height)
     return result
 
-# Loop through Can dictionary
-for can, specs in cans.items():
-    main(can, specs[0], specs[1])
+def compute_cost_efficiency(volume, cost):
+    result = volume / cost
+    return result
+
+main()
