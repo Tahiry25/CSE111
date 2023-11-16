@@ -1,6 +1,5 @@
 '''Compute and print the storage efficiency for each of the following 12 steel can sizes.'''
 import math
-
 # Dictionary of cans [radius, height, cost per can in $]
 cans = {
     "#1 Picnic": [6.83, 10.16, 0.28],
@@ -16,19 +15,25 @@ cans = {
     "#300": [7.62, 11.27, 0.38],
     "#303": [8.10, 11.11, 0.42]
 }
-
 def main():
-    best_cost_efficiency = ""
-    best_storage_effieciency = ""
-
+    best_cost_efficiency = 0
+    best_storage_efficiency = 0
+    can_cost_efficient = ''
+    can_storage_efficient = ''
     # Loop through Can dictionary
     for can, specs in cans.items():
         storage_efficiency = compute_storage_efficiency(can, specs[0], specs[1])
         volume = compute_volume(specs[0], specs[1])
         cost_efficiency = compute_cost_efficiency(volume, specs[2])
-
+        if cost_efficiency > best_cost_efficiency:
+            best_cost_efficiency = cost_efficiency
+            can_cost_efficient = can
+        if storage_efficiency > best_storage_efficiency:
+            best_storage_efficiency = storage_efficiency
+            can_storage_efficient = can
         print(f"{can} {storage_efficiency:.2f} {cost_efficiency:.0f}")
-
+    print(f"\nCan size with the best storage efficiency: {can_storage_efficient}")
+    print(f"Can size with the best cost efficiency: {can_cost_efficient}")
 
 def compute_storage_efficiency(can, radius, height):
     volume = compute_volume(radius, height)
@@ -36,17 +41,13 @@ def compute_storage_efficiency(can, radius, height):
     storage_efficiency = volume / surface_area
     return storage_efficiency
 
-
 def compute_volume(radius, height):
     volume = math.pi * radius**2 * height
     return volume
-
 def compute_surface_area(radius, height):
     result = 2*math.pi * radius * (radius + height)
     return result
-
 def compute_cost_efficiency(volume, cost):
     result = volume / cost
     return result
-
 main()
