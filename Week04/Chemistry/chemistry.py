@@ -116,10 +116,36 @@ def make_periodic_table():
     }
     return periodic_table
 
+def make_known_molecules_dict():
+    known_molecules_dict = {
+        "Al2O3": "aluminum oxide",
+        "CH3OH": "methanol",
+        "C2H6O": "ethanol",
+        "C2H5OH": "ethanol",
+        "C3H8O": "isopropyl alcohol",
+        "C3H8": "propane",
+        "C4H10": "butane",
+        "C6H6": "benzene",
+        "C6H14": "hexane",
+        "C8H18": "octane",
+        "CH3(CH2)6CH3": "octane",
+        "C13H18O2": "ibuprofen",
+        "C13H16N2O2": "melatonin",
+        "Fe2O3": "iron oxide",
+        "FeS2": "iron pyrite",
+        "H2O": "water"
+    }
+    return known_molecules_dict
+
+def get_formula_name(formula, known_molecules_dict):
+    if formula in known_molecules_dict:
+        return known_molecules_dict[formula]
+    else:
+        return 'unknow compound'
 
 def main():
     chemical_formula = input("Enter the chemical formula for a molecule: ").upper()
-    chemical_mass = float(input("Enter mass of the chemical sample in grams:"))
+    chemical_mass = float(input("Enter mass of the chemical sample in grams: "))
 
     periodic_table_dict = make_periodic_table()
 
@@ -129,10 +155,12 @@ def main():
 
     number_of_moles = chemical_mass / molar_mass
 
-    # print(symbol_quantity_list, molar_mass)
+    name = get_formula_name(chemical_formula, make_known_molecules_dict())
 
     print(f"Molar Mass: {molar_mass} grams/mole")
     print(f"Number of moles: {number_of_moles:.5f}")
+    print(f"Forumula name: {name.upper()}")
+
 
 
 if __name__ == "__main__":
