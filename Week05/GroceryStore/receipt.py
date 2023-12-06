@@ -9,7 +9,12 @@ STORE_NAME = "Alibaba Local Store"
 def main():
     date = datetime.now()
     current_date = date.strftime("%a %b %d %I:%M:S %Y")
-    product_dict = read_dictionary('products.csv', PRODUCT_INDEX)
+
+    try:
+        product_dict = read_dictionary('products.csv', PRODUCT_INDEX)
+    except:
+        print("No such file or directory: 'products.csv'")
+        return
 
     print(STORE_NAME)
     print("-------------------\n")
@@ -27,7 +32,8 @@ def main():
                 sub_total += qty * price
                 print(f"{product_name}: {qty} @ {price}")
             except:
-                print("Unkown product ID in the request.csv file")
+                print(f"Error: unknown product ID in the request.csv file '{ row_list[0] }'")
+
 
     tax = sub_total * SALES_TAX
     discount = sub_total * DISCOUNT
@@ -58,17 +64,14 @@ def read_dictionary(filename, key_column_index):
         the contents of the CSV file.
     """
     dictionary = {}
-    try:
-        with open(filename, "rt") as file:
-            reader = csv.reader(file)
-            next(reader)
+    with open(filename, "rt") as file:
+        reader = csv.reader(file)
+        next(reader)
 
-            for row in reader:
-                key = row[key_column_index]
-                dictionary[key] = row
-        return dictionary
-    except:
-        print("File not found")
+        for row in reader:
+            key = row[key_column_index]
+            dictionary[key] = row
+    return dictionary
 
 # Call main to start this program.
 if __name__ == "__main__":
